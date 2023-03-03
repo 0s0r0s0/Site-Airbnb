@@ -1,0 +1,44 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+
+    <div class="d-flex justify-content-center">
+        <div class="card">
+            <div class="card-body">
+                <form action="{{ route( 'auth_register' ) }}" method="post">
+
+                    <label class="form-row">
+                        <div>Vous souhaitez être:</div>
+                        <input type="radio" name="role_id" checked="checked" value="1">Voyageur
+                        <input type="radio" name="role_id"  value="2">Hôte
+                    </label>
+                    <label class="form-row">
+                        <span>Votre pseudo</span>
+                        <input type="text" name="username" class="form-control{% if form_status.hasError( 'username' ) %} is-invalid{%  endif %}" value="{{ form_status.getValue( 'username' ) }}">
+                        {% if form_status.hasError( 'username' ) %}
+                            <br><span class="invalid-feedback">{{ form_status.getError( 'username' ) }}</span>
+                        {% endif %}
+                    </label>
+                    <label class="form-row">
+                        <span>Email</span>
+                        <input type="text" name="email" class="form-control{% if form_status.hasError( 'email' ) %} is-invalid{%  endif %}" value="{{ form_status.getValue( 'email' ) }}">
+                        {% if form_status.hasError( 'email' ) %}
+                            <br><span class="invalid-feedback">{{ form_status.getError( 'email' ) }}</span>
+                        {% endif %}
+                    </label>
+                    <label class="form-row">
+                        <span>Mot de passe</span>
+                        <input type="password" name="password" class="form-control{% if form_status.hasError( 'password' ) %} is-invalid{%  endif %}" value="{{ form_status.getValue( 'password' ) }}">
+                        {% if form_status.hasError( 'password' ) %}
+                            <br><span class="invalid-feedback">{{ form_status.getError( 'password' ) }}</span>
+                        {% endif %}
+                    </label>
+
+
+                    <input type="submit" value="S'inscrire" class="btn btn-success">
+                    <a href="{{ route( 'login' ) }}" class="btn btn-info">Connexion</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

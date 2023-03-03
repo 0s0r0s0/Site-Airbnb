@@ -1,0 +1,67 @@
+{% extends 'layout.twig' %}
+{%  block top_links %}
+    <a href="{{ route( 'logout' ) }}" class="btn btn-danger">Déconnexion</a>
+{%  endblock %}
+{% block content %}
+    <div class="d-flex justify-content-center">
+        <div class="card">
+            <div class="card-body">
+                <form action="{{ route( 'ajout_location_insert' ) }}" method="post" enctype="multipart/form-data" >
+                    
+                    <ul class="list-unstyled d-flex flex-wrap {% if form_status.hasError('room_type_id') %} border border-danger{% endif %}">
+                        {% for room_type in room_types %}
+                            <li class="p-2">
+                                <label>
+                                    <input type="radio" name="type_id" value="{{ room_type.id }}" {% if form_status.getValue('room_type_id') is same as( room_type.id ) %} checked="checked"{% endif %}>
+                                    {{ room_type.label }}
+                                </label>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    <label class="form-row">
+                        <input type="text" name="city"  placeholder="Ville">
+                    </label>
+
+                    <label class="form-row">
+                        <input type="text" name="country"  placeholder="Pays">
+                    </label>
+
+                    <label class="form-row">
+                        <input type="text" name="size"  placeholder="Taille en m²">
+                    </label>
+
+                     <label class="form-row">
+                        <textarea name="description"  placeholder="Ajouter une description" ></textarea>
+                    </label> 
+
+                    <label class="form-row">
+                        <input type="text" name="beds"  placeholder="Nombre de couchages">
+                    </label>
+
+                    <label class="form-row">
+                        <input type="text" name="price"  placeholder="Prix/jour">
+                    </label>
+
+                    <ul class="list-unstyled list-group"">
+                        {% for equipements in equipements %}
+                            <li class="list-group-item">
+                                <input type="checkbox" name="equipements[]" value="{{ equipements.id }}">
+                                {{ equipements.label }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    <ul class="list-unstyled d-flex flex-wrap">
+
+                    <input type="checkbox" name="rooms_owner" value="{{ rooms_owner }}" class="rounded-circle" id="rooms_validate">
+                        <label for="rooms_validate">&nbsp;&nbsp;Veuillez confirmer vos informations</label>
+                    </ul>
+                    <input type="submit" value="Publier l'annonce" class="btn btn-success">
+                    <a href="{{ route( 'locations' ) }}" class="btn btn-danger mx-3">Retour</a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

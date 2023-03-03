@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>{{ htmlTitle( title ) }}</title>
+
+	<link rel="stylesheet" href="{{ asset( 'vendor/bootstrap/bootstrap.min.css' ) }}">
+	<link rel="stylesheet" href="{{ asset( 'css/style.css' ) }}">
+</head>
+<body class="d-flex flex-column min-vh-100">
+	{% block header %}
+		<header class="bg-dark text-light">
+			<div class="container d-flex justify-content-between py-3">
+				<div>
+					{% block logo %}
+						<a href="{{ route( 'home' ) }}">
+							<img src="{{ asset( 'img/phare.jpg' ) }}" class="img-thumbnail" alt="">
+							<span>{{ siteFullName() }}</span>
+						</a>
+					{% endblock %}
+				</div>
+				<div>
+					{% block top_links %}{% endblock %}
+				</div>
+				{% block top_links_2 %}{% endblock %}
+			</div>
+		</header>
+	{% endblock %}
+
+	<main class="flex-grow-1 bg-light">
+		{% block user_menu_bar %}
+			<div class="bg-secondary text-light">
+				<div class="container">
+					{% block user_menu %}{% endblock %}
+				</div>
+			</div>
+		{% endblock %}
+
+		<div class="container py-3">
+			{% block content_header %}
+				<h1>{{ title }}</h1>
+			{% endblock %}
+			{% block content %}{% endblock %}
+		</div>
+	</main>
+
+	<footer class="bg-secondary text-light">
+		<div class="container py-3">
+			Copyright &copy;2019-2020 - ERbiNb2019
+		</div>
+	</footer>
+
+	<script src="{{ asset( 'vendor/jquery/jquery-3.4.1.min.js' ) }}"></script>
+	<script src="{{ asset( 'vendor/bootstrap/bootstrap.bundle.min.js' ) }}"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{% extends 'layout.twig' %}
+
+{% block header %}{% endblock %}
+{% block user_menu_bar %}{% endblock %}
+
+{% block content_header %}
+    <h1 class="text-center">
+        <img src="{{ asset( 'img/phare.jpg' ) }}" alt="RBNB"><br>
+        {{ title }}
+    </h1>
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-center">
+        <div class="card">
+            <div class="card-body">
+                <form action="{{ route( 'auth' ) }}" method="post">
+                    <label class="form-row">
+                        <span>Email</span>
+                        <input type="text" name="email" class="form-control{% if form_status.hasError( 'email' ) %} is-invalid{%  endif %}" value="{{ form_status.getValue( 'email' ) }}">
+                        {% if form_status.hasError( 'email' ) %}
+                            <br><span class="invalid-feedback">{{ form_status.getError( 'email' ) }}</span>
+                        {% endif %}
+                    </label>
+
+                    <label class="form-row">
+                        <span>Mot de passe</span>
+                        <input type="password" name="password" class="form-control{% if form_status.hasError( 'password' ) %} is-invalid{%  endif %}" value="{{ form_status.getValue( 'password' ) }}">
+                        {% if form_status.hasError( 'password' ) %}
+                            <br><span class="invalid-feedback">{{ form_status.getError( 'password' ) }}</span>
+                        {% endif %}
+                    </label>
+
+                    <input type="submit" value="Go !" class="btn btn-success">
+                    <a href="{{ route( 'register' ) }}" class="btn btn-info">Inscription</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

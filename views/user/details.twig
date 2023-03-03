@@ -1,0 +1,74 @@
+{% extends "user/annonces.twig" %}
+
+{% block content %}
+    <div class="d-flex justify-content-center">
+        <div class="card w-100">
+            <ul class="list-unstyled">
+                <div class="card-body d-flex">
+                    <div class="card m-3 w-75">
+                        <li class="d-flex card-body m-5 p-2">
+                            <ul class="d-flex flex-column list-unstyled">
+                                <li class="p-1">
+                                    {{ rooms.room_type }}
+                                </li>
+                                <li class="p-1">
+                                    {{ rooms.city }} ({{ rooms.country }})
+                                </li>
+                                <li class="font-weight-bold">
+                                    {{ rooms.description }}
+                                </li>
+                                <li class="p-1">
+                                    {{ rooms.beds }} lit(s), {{ rooms.size }} m²
+                                </li>
+                                <li class="font-weight-bold">
+                                    {{ rooms.price }} €/nuit
+                                </li>
+                                {% if rooms.equipements is not empty %}
+                                    <li class="mt-4 p-1">
+                                        <ul class="d-flex list-unstyled">
+                                            {% for equipement in rooms.equipements %}
+                                                <li class="p-2">
+                                                    {{ equipement.label }}
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endif %}
+                              
+                                <div class="align-self-end card-body p-2">
+                                    <a href="{{ route( 'annonces' ) }}" class="btn btn-success mx-3">Toutes les annonces</a>
+                                </div>
+
+                                <form action="{{ route( 'reservation' ) }}" method="post">
+                                    <input type="hidden" name="room_id" value="{{ rooms.id }}">
+
+                                    <label class="form-row">
+                                        <span class="mx-2">Date de début :</span>
+                                        <input type="date" name="start_rent" class="form-control {% if form_status.hasError('start_rent') %} is-invalid{% endif %} mt-2"  value="{{ form_status.getValue( 'start_rent' ) }}">
+                                        {% if form_status.hasError( 'start_rent' ) %}
+                                            <br><span class="invalid-feedback">{{ form_status.getError( 'start_rent' ) }}</span>
+                                        {% endif %}
+                                    </label>
+
+                                    <label class="form-row">
+                                        <span class="mx-2">Date de fin :</span>
+                                        <input type="date" name="end_rent" class="form-control {% if form_status.hasError('end_rent') %} is-invalid{% endif %} mt-2"  value="{{ form_status.getValue( 'end_rent' ) }}">
+                                        {% if form_status.hasError( 'end_date' ) %}
+                                            <br><span class="invalid-feedback">{{ form_status.getError( 'end_rent' ) }}</span>
+                                        {% endif %}
+                                    </label>
+                                    <ul class="list-unstyled d-flex flex-wrap">
+                                        <input type="checkbox" name="user_id" value="{{ user_id }}">Confirmez votre réservation</input>
+                                    </ul>
+                                    <input type="submit" class="btn btn-success mt-3 mx-5" value="Réserver">
+                                </form>
+
+                            </ul>
+                        </li>
+                    </div>
+                    
+                </div>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
